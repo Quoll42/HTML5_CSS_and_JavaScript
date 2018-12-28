@@ -1,0 +1,15 @@
+#firstParagraph {
+    font-weight: bold;
+  }
+
+  .redHeader {
+    color: red;
+  }
+
+  p:first-of-type {
+    font-weight: bold;
+  }
+  
+  a:hover {
+    color: green;
+  }
