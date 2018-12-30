@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: #333333;
+}
+
+/* Table Styles */
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+table > caption {
+    font-weight: bold;
+}
+
+thead {
+    background-color: #3056A0;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #E6E6F5;
+}
+
+tfoot {
+    text-align: right;
+    font-size: 0.75em;
+}
+
+#header {
+    background-color: #3056A0;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    font-size: 3em;
+}
+
+#contactDetails , #contactList {
+    border: 1px solid #999999;
+    margin: 15px;
+    padding: 15px;
+}
+
+#footer {
+    background-color: #3056A0;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    font-size: 0.8em;
+}

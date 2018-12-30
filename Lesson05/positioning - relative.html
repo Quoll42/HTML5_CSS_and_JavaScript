@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <title>Lesson 5, Controlling Positions</title>
+    <style>
+        .box {
+            height: 200px;
+            width: 200px;
+            display: inline-block;
+        }
+        #middleBox {
+            position: relative;
+            top: 50px;
+            left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="firstBox" class="box" style="background:red"></div>
+    <div id="middleBox" class="box" style="background: green; z-index:-1"></div>
+    <div id="lastBox" class="box" style="background: blue"></div>
+</body>
+</html>
