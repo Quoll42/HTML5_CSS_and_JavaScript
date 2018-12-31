@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TryIt, at the end of Lesson 6</title>
+    <link rel="stylesheet" type="text/css" href="tryit.css">
+</head>
+<body>
+    <form method="post">
+        <div class="formRow">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter yer name" autofocus>
+        </div>
+        <div class="formRow">
+            <label for="male">Male</label>
+            <input checked type="radio" name="gender" id="male" value="male"> <!--checked as the default value-->
+            <label for="female">Female</label>
+            <input type="radio" name="gender" id="female" value="female">
+        </div>
+        <div class="formRow">
+            <label for="subscribe">Subscribe to newsletter?</label>
+            <input type="checkbox" name="subscribe" id="subscribe">
+        </div>
+        <div class="formRow">
+            <label for="notes">Notes</label>
+            <textarea name="notes" id="notes" cols="30" rows="5"></textarea>
+        </div>
+        <div class="formRow">
+            <label for="DOB">Date of Birth</label>
+            <input type="date" name="DOB" id="DOB">
+        </div>
+        <div class="formRow">
+            <label for="salary">Salary ($)</label>
+            <input type="number" name="salary" id="salary" step="500">
+        </div>
+        <div class="formRow">
+            <input type="submit" style="width:70px" value="Submit">
+        </div>
+    </form>
+</body>
+</html>
