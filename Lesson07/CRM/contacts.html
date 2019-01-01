@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contacts</title>
+    <link rel="stylesheet" type="text/css" href="contacts.css">
+</head>
+<body>
+    <header>Contacts</header>
+    <main id="contactScreen">
+        <section><h2>Contact Details</h2>
+            <form method="post">
+                <div class="formRow"> <!-- Having a class for each pair puts each on different lines -->
+                    <label for="contactName">Contact Name</label>
+                    <input name="contactName" id="contactName" type="text" autocomplete="off" autofocus>
+                    <!-- Note the use of autocomplete above. It can also be turned on/off for the whole form. -->
+                    <!-- Note too the use of autofocus above. It puts the text cursor in that field. -->
+                </div>
+                <div class="formRow">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input name="phoneNumber" placeholder="Include area code" id="phoneNumber" type="tel">
+                        <!-- Note the placeholder above, it is a nice touch :-) -->
+                </div>
+                <div class="formRow">
+                        <label for="emailAddress">Email Address</label>
+                        <input name="emailAddress" id="emailAddress" type="email">
+                </div>
+                <div class="formRow">
+                    <label for="companyName">Company Name</label>
+                    <select name="companyName" id="companyName">
+                        <option value="-1">Please select</option>
+                        <option value="1">ABC Incorporated</option>
+                        <option value="2">XYZ Ltd</option>
+                        <option value="3" selected>ACME International</option> <!--selected as the default-->
+                    </select>
+                </div>
+                <div class="formRow"> <!--Alternativew approach, a List/Combo -->
+                    <label for="companyName2">Company Name -using datalist</label>
+                    <input list="companies" name="companyName2" id="companyName2">
+                    <datalist id="companies">
+                        <option value="">ABC Incorporated</option>
+                        <option value="">XYZ Ltd</option>
+                        <option value="">ACME International</option>
+                    </datalist>
+                </div>
+                <div class="formRow">
+                    <label for="notes">Notes</label>
+                    <textarea name="notes" id="notes" cols="40" rows="6"></textarea>
+                </div>
+                <div class="formRow">
+                    <input type="submit" style="width:70px" value="Save"/>
+                </div>
+                <div class="formRow">
+                    <label for="lastContacted">Last Contacted</label>
+                    <input name="lastContacted" id="lastContacted" type="date"/>
+                </div>
+            </form>
+        </section>
+        <section>
+            <table>
+                <caption>Sales leads</caption>
+                <thead>
+                    <tr>
+                        <th>Contact name</th>
+                        <th>Phone number</th>
+                        <th>Email address</th>
+                        <th>Company name</th>
+                        <th>Last contacted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>William Smith</td>
+                        <td>555-642-7371</td>
+                        <td>william@testing.com</td>
+                        <td>ACME Industries</td>
+                        <td><time datetime="2014-10-21">21-Oct-2014</time></td> <!--Info for user + semantics/microformat-->
+                    </tr>
+                    <tr>
+                        <td>Bob Morris</td>
+                        <td>555-999-2991</td>
+                        <td>bob@testing.com</td>
+                        <td>ABC Corp</td>
+                        <td><time datetime="2014-9-12">12-Sep-2014</time></td> <!--Info for user + semantics/microformat-->
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">2 contacts displayed</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+    </main> 
+    <footer>Copyright (c) 2018</footer>
+</body>
+</html>

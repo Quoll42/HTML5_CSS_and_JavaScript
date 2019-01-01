@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Semantic Tags</title>
+    <style>
+        header, footer {
+            padding: 30px 0 30px 0;
+            width: 100%;
+            background: #B3B2CF;
+            text-align: center;
+        }
+        header {
+            font-size: 22px;
+        }
+        footer {
+            clear: both; /*that clears it away from both elements floating above*/
+            margin-top: 50px;
+            font-size: 18px;
+        }
+        section {
+            float: left;
+            padding: 10px;
+            margin: 20px;
+            width: 70px;
+            border: 1px solid black;
+        }
+        aside {
+            position: relative;
+            float: right;
+            padding: 10px;
+            margin: 20px;
+            width: 150px;
+            height: 200px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <header>This is the header</header>
+    <main>
+        <aside>This is where the advertising goes</aside>
+        <section>This is the 1st section in the page</section>
+        <section>This is the 2nd section in the page</section>
+    </main>
+    <footer>This is the footer</footer>
+</body>
+</html>
