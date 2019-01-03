@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Drag and Drop</title>
+    <style>
+        .box {
+            height: 200px;
+            width: 400px;
+            display: inline-block;
+            text-align: center;
+            border: 2px dashed black;
+            line-height: 200px;
+            margin: 50px;
+        }
+    </style>
+    <script>
+        function startDragging(evt) {
+            evt.dataTransfer.setData("Text",evt.target.textContent);
+            /* alert(evt.target.textContent); */
+        }
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        function drop(event) {
+            var grabbedText = event.dataTransfer.getData("Text");
+            /* alert(grabbedText); */
+            event.currentTarget.textContent = grabbedText;
+        }
+    </script>
+</head>
+<body>
+    <div class="box" ondrop="drop(event)" ondragover="allowDrop(event)">Drag something onto me</div>
+    <h1 draggable="true" ondragstart="startDragging(event)">I am a header 1 tag</h1>
+    <h3 draggable="true" ondragstart="startDragging(event)">I am a header 3 tag</h3>
+    <p draggable="true" ondragstart="startDragging(event)">I am a p tag</p>
+</body>
+</html>
