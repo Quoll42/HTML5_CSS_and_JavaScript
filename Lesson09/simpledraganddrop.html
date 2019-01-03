@@ -20,7 +20,7 @@
             /* alert(evt.target.textContent); */
         }
         function allowDrop(event) {
-            event.preventDefault();
+            event.preventDefault(); /* This doesn't work with Firefox!!! */ 
         }
         function drop(event) {
             var grabbedText = event.dataTransfer.getData("Text");
