@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Progress tag</title>
+    <script>
+        setInterval(updateProgressBar, 80);
+        function updateProgressBar() {
+            var ProgressBar = document.getElementById("progressBar");
+            if (progressBar.value < 100) {
+                progressBar.value += 1;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Simple static</h2>
+    <progress value="20" min="0" max="100"></progress>
+    <h2>Moved along by JavaScript</h2>
+    <progress id="progressBar" value="0" max="100"></progress>
+</body>
+</html>
