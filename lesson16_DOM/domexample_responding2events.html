@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        ul {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="mainHeader">This is the title</h1>
+    <ul id="daysOfWeek">
+        <li>Monday</li>
+        <li>Tuesday</li>
+        <li>Wednesday</li>
+        <li>Thursday</li>
+        <li>Friday</li>
+    </ul>
+    <script>
+        document.getElementsByClassName('mainHeader')[0].addEventListener("mouseenter", function(event) {
+            document.getElementById("daysOfWeek").style.display = 'block';
+        });
+        document.getElementsByClassName('mainHeader')[0].addEventListener("mouseleave", function(event) {
+            document.getElementById("daysOfWeek").style.display = 'none';
+        });
+    </script>
+</body>
+</html>
