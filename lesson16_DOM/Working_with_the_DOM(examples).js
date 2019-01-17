@@ -26,6 +26,9 @@ obj.firstElementChild
 //find the parent for that node, ie the body element
 obj.parentNode
 
+//Also note: you can use event.target.nextElementSibling to find the next element in the DOM with the same parent.
+
+
 // MANIPULATING THE DOM ================
 // Firstly, construct a doument fragment
 newLi = document.createElement('li');

@@ -17,6 +17,20 @@ function contactsScreen(mainID) {
                     }
                 }
             };
+            document.getElementById('addContact').addEventListener("click", function(event) { 
+                event.preventDefault();
+                document.getElementById('contactDetail').style.display = 'block';
+            } );
+            timeElements = document.getElementsByTagName("time");
+            for (let i = 0; i < timeElements.length; i++) {
+                var tElement = timeElements[i];
+                tElement.addEventListener('mouseenter', function(event) {
+                    event.target.nextElementSibling.style.display = 'block';
+                });
+                tElement.addEventListener('mouseleave', function(event) {
+                    event.target.nextElementSibling.style.display = 'none';
+                });
+            }
             initialised = true;
         }
     };

@@ -24,6 +24,19 @@ footer {
     padding: 15px;
 }
 
+.overlay {
+    height: 100;
+    width: 300px;
+    border: 1px solid #333333;
+    background: #EEEEEE;
+    padding: 10px;
+    display: none;
+    position: absolute;
+    /* top: 0px;
+    left: 0px; */
+    z-index: 1;
+}
+
 /* Table Styles */
 table, th, td {
     border: 1px solid black;
