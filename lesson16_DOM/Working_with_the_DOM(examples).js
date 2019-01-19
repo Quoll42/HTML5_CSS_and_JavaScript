@@ -30,7 +30,7 @@ obj.parentNode
 
 
 // MANIPULATING THE DOM ================
-// Firstly, construct a doument fragment
+// Firstly, construct a document fragment
 newLi = document.createElement('li');
 saturday = document.createTextNode('Saturday');
 newLi.appendChild(saturday);
