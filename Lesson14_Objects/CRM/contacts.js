@@ -1,5 +1,5 @@
 function contactsScreen(mainID) {
-    var appScreen = mainID; //This line seems IMO to be unnecessary 
+    var appScreen = mainID; //This line seems IMO to be unnecessary <= appScreen gets used in lesson 18
     var initialised = false;
     return {
         init: function() {
