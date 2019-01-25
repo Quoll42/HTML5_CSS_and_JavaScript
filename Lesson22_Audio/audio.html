@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 22, Audio</title>
+    <script src="jquery-3.3.1.js"></script>
+</head>
+<body>
+    <audio id="audioTrack">
+        <source src="test.ogg" type="audio/ogg">
+        <source src="test.mp4" type="audio/mp4">
+            Your browser does not support the audio element.
+    </audio>
+    <div id="controls">
+        <progress></progress>
+        <div id='buttons' style="padding:5px;">
+            <a href="#" id='play'>Play</a>&nbsp
+            <a href="#" id='pause'>Pause</a>&nbsp
+            <a href="#" id='stop'>Stop</a>
+        </div>
+    </div>
+    <script> //Create DIY playback controls using jQuery + the DOM + the Progress tag:
+        $("audio").on('timeupdate', function(evt) {
+            var duration = evt.target.duration; //get the duration of the audio file from the DOM
+            var current = evt.target.currentTime; //get from the DOM how far through the audio has played
+            $('progress').val(current/duration); //set the progress bar's position
+        });
+        $('#play').click( function(evt) {
+            evt.preventDefault();
+            $('audio')[0].play();
+        });
+        $('#pause').click( function(evt) {
+            evt.preventDefault();
+            $('audio')[0].pause();
+        });
+        $('#stop').click( function(evt) {
+            evt.preventDefault();
+            $('audio')[0].pause(); //stop by pausing and then
+            $('audio')[0].currentTime = 0; //moving to the start
+        });
+    </script>
+</body>
+</html>
