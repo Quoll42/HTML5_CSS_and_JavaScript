@@ -19,6 +19,10 @@
             <a href="#" id='stop'>Stop</a>
         </div>
     </div>
+    <input type="range" name="rangePosition" id="rangePosition" min="0" max="100" value="100">
+    <p></p>
+    <h2>Victoria Memorial, Kolkata</h2>
+    <a href="https://www.tripadvisor.in/LocationPhotoDirectLink-g304558-d311680-i41756193-Victoria_Memorial_Hall-Kolkata_Calcutta_Kolkata_District_West_Bengal.html#41756193"><img alt="Victoria Memorial, Kolkata" src="https://media-cdn.tripadvisor.com/media/photo-s/02/7d/26/21/filename-dsc00602-jpg.jpg"/></a><br/>This photo of Victoria Memorial Hall is courtesy of TripAdvisor
     <script> //Create DIY playback controls using jQuery + the Progress tag:
         $("audio").on('timeupdate', function(evt) {
             var duration = evt.target.duration; //get the duration of the audio file from the DOM
@@ -37,6 +41,13 @@
             evt.preventDefault();
             $('audio')[0].pause(); //stop by pausing and then
             $('audio')[0].currentTime = 0; //moving to the start
+        });
+        $('#rangePosition').on('change', function(evt) {
+            var rangeValue = document.getElementById('rangePosition').value ;
+            var audioDuration = document.getElementById('audioTrack').duration;
+            var newPosition = audioDuration * rangeValue / 100;
+            document.getElementById('audioTrack').currentTime = newPosition;
+            document.getElementById('audioTrack').play();
         });
     </script>
 </body>
