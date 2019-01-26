@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jquery-3.3.1.js"></script>
+</head>
+<body>
+    <video controls width="800" poster="poster.png" id='videoElement' autoplay>
+        <source src="test.ogg" type="video/ogg; codecs='theora, vorbis'">
+        <source src="test.m4v" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
+    <div id="buttons" style="padding:5px;">
+        <a href="#" id='decreaseVolume'>Decrease Volume</a>&nbsp;
+        <a href="#" id='increaseVolume'>Increase Volume</a>
+        <p></p>
+        <a href="#" id='decreaseSpeed'>Decrease Speed</a>&nbsp;
+        <a href="#" id='increaseSpeed'>Increase Speed</a>
+        <p></p>
+        <a href="#" id='jumpBack'>Jump Back</a>&nbsp;
+        <a href="#" id='jumpForward'>Jump Forward</a>
+        <p></p>
+        <a href="#" id='fullScreen'>Full Screen</a>
+    </div>
+    <script>
+        $('#decreaseVolume').click(function(evt) {
+            evt.preventDefault();
+            var currentVolume = document.getElementById('videoElement').volume;
+            document.getElementById('videoElement').volume = Math.max(0,currentVolume-0.1);
+        });
+        $('#increaseVolume').click(function(evt) {
+            evt.preventDefault();
+            var currentVolume = document.getElementById('videoElement').volume;
+            document.getElementById('videoElement').volume = Math.min(1,currentVolume+0.1);
+        });
+        $('#decreaseSpeed').click(function(evt) {
+            evt.preventDefault();
+            var currentSpeed = document.getElementById('videoElement').playbackRate;
+            document.getElementById('videoElement').playbackRate = Math.max(0,currentSpeed-0.1);
+        });
+        $('#increaseSpeed').click(function(evt) {
+            evt.preventDefault();
+            var currentSpeed = document.getElementById('videoElement').playbackRate;
+            document.getElementById('videoElement').playbackRate = Math.min(5,currentSpeed+0.1);
+        });
+        $('#fullScreen').click(function(evt) {
+            evt.preventDefault();
+            document.getElementById('videoElement').requestFullscreen();
+        });
+        $('#jumpBack').click(function(evt) {
+            evt.preventDefault();
+            var currentTime = document.getElementById('videoElement').currentTime;
+            //alert(currentTime);
+            document.getElementById('videoElement').currentTime = Math.max(0, currentTime - 10);
+        });
+        $('#jumpForward').click(function(evt) {
+            evt.preventDefault();
+            var currentTime = document.getElementById('videoElement').currentTime;
+            var duration = document.getElementById('videoElement').duration;
+            //alert(currentTime);
+            document.getElementById('videoElement').currentTime = Math.min(duration, currentTime + 10);
+        });
+    </script>
+</body>
+</html>
