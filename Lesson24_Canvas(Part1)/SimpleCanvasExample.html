@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 24, Simple Canvas Example</title>
+    <!--- <script src="jquery-3.3.1.js"></script> jQuery -->
+</head>
+<body>
+    <canvas width='800' height='500' id='myCanvas'></canvas>
+    <script>
+        //var context = $('#myCanvas')[0].getContext("2d"); //jQuery
+        var context = document.getElementById('myCanvas').getContext("2d");
+        
+        //Filled rectangle:
+        context.fillStyle = 'lightgrey';
+        context.fillRect(300,200,100,200);
+
+        //unfilled rectangle:
+        context.strokeStyle = 'grey';
+        context.lineWidth = 3;
+        context.strokeRect(50,300,400,100);
+
+        //Make a filled shape from a drawn line
+        context.beginPath();
+        context.moveTo(100,20);
+        context.lineTo(30,100);
+        context.lineTo(170,100);
+        context.fill();
+
+        //Draw a line
+        context.beginPath();
+        context.moveTo(110,25);
+        context.lineTo(40,105);
+        context.lineTo(180,105);
+        context.lineTo(110,25); //could have used: context.closePath();
+        context.stroke();
+
+        //Make a filled circle
+        context.beginPath();
+        context.arc(110,110,50,0,2*Math.PI,true);
+        context.fill();
+
+        //Draw an arc line
+        context.beginPath();
+        context.arc(110,110,50,0,0.5*Math.PI,true);
+        context.stroke();
+
+        //Draw an arc between 2 points with supplied a radius
+        context.beginPath();
+        context.moveTo(50,50);
+        context.arcTo(150,20,150,150,80);
+        context.stroke();
+
+        //Draw text
+        context.fillStyle = 'green';
+        context.font = '20px Courier';
+        context.fillText('Hello World!',20,50);
+    </script>
+</body>
+</html>
