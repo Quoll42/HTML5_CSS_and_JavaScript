@@ -55,6 +55,15 @@
         context.fillStyle = 'green';
         context.font = '20px Courier';
         context.fillText('Hello World!',20,50);
+
+        //Find text length in pixels:
+        var lengthOfMyText = context.measureText('Hello world!').width;
+        //alert("The length of 'Hello world!' is " + lengthOfMyText);
+        
+        //Draw outline text
+        context.font = '50px Georgia';
+        context.strokeText('Hello World!',200,180);
+
     </script>
 </body>
 </html>

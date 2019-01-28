@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Walk in Canvas</title>
+</head>
+<body>
+    <canvas width='800' height='800' id='myCanvas'></canvas>
+    <script>
+        var context = document.getElementById('myCanvas').getContext("2d");
+        context.beginPath();
+        var x = 400;
+        var y = 400;
+        context.moveTo(x,y);
+        for (let i = 0; i < 10000; i++) {
+            rand = Math.random();
+            if (rand < 0.25) {
+                y -= 3;
+            } else if (rand < 0.5) {
+                y += 3;
+            } else if (rand < 0.75) {
+                x -= 3;
+            } else {
+                x += 3;
+            };
+            context.lineTo(x,y);
+        }
+        context.stroke();
+    </script>
+</body>
+</html>
