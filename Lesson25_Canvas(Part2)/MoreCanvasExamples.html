@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 25, More Canvas Examples</title>
+</head>
+<body>
+    <canvas width='800' height='800' id='myCanvas'></canvas>
+    <script>
+        var context = document.getElementById('myCanvas').getContext("2d");
+        
+        //Saving the context state
+        context.fillStyle = 'red';
+        context.save();
+
+        //Create linear gradients:
+        var gradient = context.createLinearGradient(50,0,350,0); //Define a line betwen points
+        gradient.addColorStop(0.0, 'black');  //Add colorStops to the line
+        gradient.addColorStop(1.0, 'white');
+        context.fillStyle = gradient; //Specify to use the gradient
+        context.fillRect(50,50,350,140);
+
+        var gradient2 = context.createLinearGradient(50,0,350,0); //Define a line betwen points
+        gradient2.addColorStop(0.0, 'red');  //Add colorStops to the line
+        gradient2.addColorStop(0.45, 'white');
+        gradient2.addColorStop(0.7, 'white');
+        gradient2.addColorStop(1.0, 'blue');
+        context.fillStyle = gradient2; //Specify to use the gradient
+        context.fillRect(50,200,350,140);
+
+
+        //Creating shadows:
+        context.shadowColor = '#ABABAB';
+        context.shadowOffsetX = 10;
+        context.shadowOffsetY = 10;
+        context.font = '50px Courier';
+        context.fillText('Hello World!',20,400);
+        context.shadowBlur = 5;
+        context.fillText('Hello World!',20,500);
+
+        //Restoring the context state
+        context.restore();
+        context.fillRect(450,50,90,90); 
+
+
+    </script>
+</body>
+</html>
