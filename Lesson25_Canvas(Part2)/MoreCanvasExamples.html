@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lesson 25, More Canvas Examples</title>
+    <title>Lesson 25, Saving, Gradients, Shadows in Canvas</title>
 </head>
 <body>
     <canvas width='800' height='800' id='myCanvas'></canvas>
     <script>
         var context = document.getElementById('myCanvas').getContext("2d");
-        
+
         //Saving the context state
         context.fillStyle = 'red';
         context.save();
@@ -40,8 +40,7 @@
 
         //Restoring the context state
         context.restore();
-        context.fillRect(450,50,90,90); 
-
+        context.fillRect(450,50,90,90);
 
     </script>
 </body>

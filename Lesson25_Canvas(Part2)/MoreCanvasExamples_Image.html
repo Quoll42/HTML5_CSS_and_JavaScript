@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 25, Image on Canvas</title>
+</head>
+<body>
+    <canvas width='1067' height='800' id='myCanvas'></canvas>
+    <script>
+        var context = document.getElementById('myCanvas').getContext("2d");
+        
+        //Load a background image
+        var image = new Image();
+        image.src = 'cat.jpg';
+
+        image.addEventListener('load', function() { //Wait for the image to load before using it!
+            context.drawImage(image,0,0,1067,800);
+        });
+
+        /*An alternative way to make the event:
+        image.onload = function() {
+            context.drawImage(image,0,0);
+        };*/
+        
+//NOTE: You're meant to be able to draw ON TOP of the image but that didn't work for me.
+
+    </script>
+</body>
+</html>

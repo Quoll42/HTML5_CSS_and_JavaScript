@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 25, Animated Clock</title>
+</head>
+<body>
+    <canvas width='400' height='400' id='myCanvas'></canvas>
+    <script>
+        var context = document.getElementById('myCanvas').getContext("2d");
+        context.fillStyle = 'blue';
+        //Draw a circle
+        context.arc(200,200,130,0,2*Math.PI,true);
+        context.fill();
+
+        context.lineWidth = 2;
+        context.translate(200,200); //This changes the (0,0) origin to the centre of the 400x400 canvas
+        setInterval(drawSeconds, 1000);
+
+        function drawSeconds() {
+            context.strokeStyle = 'blue';
+            context.beginPath();
+            context.moveTo(0,0);
+            context.lineTo(0,-120);
+            context.stroke();
+            context.rotate(2*Math.PI / 60);
+
+            context.strokeStyle = 'white';
+            context.beginPath();
+            context.moveTo(0,0);
+            context.lineTo(0,-120);
+            context.stroke();
+
+            //NOTE: This works ok but faintly visible white lines remain on the canvas. 
+        };
+    </script>
+</body>
+</html>

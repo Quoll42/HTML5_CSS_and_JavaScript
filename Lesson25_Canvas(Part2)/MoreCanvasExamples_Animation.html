@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 25, Animation on Canvas</title>
+</head>
+<body>
+    <canvas width='800' height='800' id='myCanvas'></canvas>
+    <script>
+        var context = document.getElementById('myCanvas').getContext("2d");
+        context.fillStyle = 'blue';
+        var startX = 0;
+        var startY = 0;
+        var forward = true;
+        setInterval(drawRectangle,8);
+
+        function drawRectangle() {
+            context.clearRect(startX, startY, 40, 40);
+            if (forward && startX >= 400) {
+                forward = false;
+            } else if (!forward && startX <= 0) {
+                forward = true;
+            };
+            if (forward) {
+                startX += 2;
+                startY += 2;
+            } else {
+                startX -= 2;
+                startY -= 2;
+            }
+            context.fillRect(startX,startY, 40, 40);
+        }
+
+    </script>
+</body>
+</html>

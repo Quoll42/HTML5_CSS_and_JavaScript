@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 25, Transforms in Canvas</title>
+</head>
+<body>
+    <canvas width='800' height='800' id='myCanvas'></canvas>
+    <script>
+        var context = document.getElementById('myCanvas').getContext("2d");
+
+        //Transforming shapes
+        context.fillStyle = '#444444';
+        context.fillRect(10,10, 180,180);
+
+        context.transform(0.5,0.3,-0.3,0.5,80,30);
+        context.fillStyle = '#CCCCCC';
+        context.fillRect(10,10, 180,180);
+
+        context.transform(0.5,0.3,-0.3,0.5,80,30);  //This adds extra transform in addition to the the previous one
+                                                    //Use setTransform instead if you don't want to accumulate them.
+        context.fillStyle = 'white';
+        context.fillRect(10,10, 180,180);
+
+        //Also see Canvas methods: scale, transform and rotate
+
+    </script>
+</body>
+</html>
