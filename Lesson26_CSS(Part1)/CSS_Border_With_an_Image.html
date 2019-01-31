@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 26, CSS Border with an Image</title>
+    <style>
+        div {
+            margin: 50px;
+            width: 300px;
+            height: 300px;
+            background: #cdcdcd;
+            border: 30px solid transparent;
+            /* border-radius: 20px; <= doesnt seem to work with image background */
+            border-image: url('border.png') 30 30 30 30 stretch; /* Instead of stretch, you can use round or repeat */
+            /* The address of the image is relative to a CSS page (if one is used) rather than the HTML page */
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>
