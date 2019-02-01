@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="OpenSans.css">
+    <style>
+        .aTab {
+            display: inline-block;
+            line-height: 30px;
+            font-family: 'Open Sans';
+            text-align: center;
+            vertical-align: center;
+            margin: -1.5px;
+            width: 120px;
+            height: 32px;
+            border: 1px solid #555555;
+            border-radius: 10px 10px 0px 0px;
+        }
+        .aTab[data-selected = true] {
+            background: #555555;
+            box-shadow: 0px 0px 0px #888888;
+        }
+        .aTab[data-selected = false] {
+            background: white;
+            box-shadow: -5px 5px 5px  #ababab inset;
+        }   
+        a {
+            font-family: 'Open Sans';
+            text-decoration:none;
+        }
+        .aTab[data-selected = true] a {
+            color: white;
+            font-weight: bold;
+        }
+        .aTab[data-selected = false] a {
+            color: #555555;
+            font-weight: normal;
+        }
+        .aTabPage {
+            border-collapse: collapse;
+            border-left: 0px;
+            width: 500px;
+            height: 300px;
+            border: 1px solid #888888;
+            color: #222222;
+            padding: 2px;
+            margin: 1px 0px 0px -1.5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="aTab" data-selected=false><a href="#" id='tab1'>Tab 1</a></div>
+        <div class="aTab" data-selected=true><a href="#" id='tab2'>Tab 2</a></div>
+        <div class="aTab" data-selected=false><a href="#" id='tab3'>Tab 3</a></div>
+        <div class='aTabPage'>This is a tab page</div>
+    </div>
+</body>
+</html>
