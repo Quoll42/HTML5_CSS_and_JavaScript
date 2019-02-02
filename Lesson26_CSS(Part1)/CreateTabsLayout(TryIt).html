@@ -10,7 +10,7 @@
             font-family: 'Open Sans';
             text-align: center;
             vertical-align: center;
-            margin: -1.5px;
+            margin: -2.1px;
             width: 120px;
             height: 32px;
             border: 1px solid #555555;
@@ -46,14 +46,50 @@
             padding: 2px;
             margin: 1px 0px 0px -1.5px;
         }
+        .aTabPage[data-selected = true] {
+            display: block; /* This doesn't take effect! */
+            color: black;
+        }
+        .aTabPage[data-selected = false] {
+            display: none; /* This doesn't take effect! */
+            color: grey;
+        }
     </style>
+    <script>
+        function tabClicked(evt) {
+            //evt.preventDefault();
+            document.getElementById('tab1').setAttribute('data-selected',evt.currentTarget.id=='tab1');
+            document.getElementById('tab2').setAttribute('data-selected',evt.currentTarget.id=='tab2');
+            document.getElementById('tab3').setAttribute('data-selected',evt.currentTarget.id=='tab3');
+            
+            if (evt.currentTarget.id=='tab1') {
+                document.getElementById('tabPage1').style = "display: block;"
+                document.getElementById('tabPage2').style = "display: none;"
+                document.getElementById('tabPage3').style = "display: none;"
+            } else if (evt.currentTarget.id=='tab2') {
+                document.getElementById('tabPage1').style = "display: none;"
+                document.getElementById('tabPage2').style = "display: block;"
+                document.getElementById('tabPage3').style = "display: none;"
+            } else {
+                document.getElementById('tabPage1').style = "display: none;"
+                document.getElementById('tabPage2').style = "display: none;"
+                document.getElementById('tabPage3').style = "display: block;"
+            }
+
+            document.getElementById('tabPage1').setAttribute('data-selected',evt.currentTarget.id=='tab1');
+            document.getElementById('tabPage2').setAttribute('data-selected',evt.currentTarget.id=='tab2');
+            document.getElementById('tabPage3').setAttribute('data-selected',evt.currentTarget.id=='tab3');
+        };
+    </script>
 </head>
 <body>
     <div>
-        <div class="aTab" data-selected=false><a href="#" id='tab1'>Tab 1</a></div>
-        <div class="aTab" data-selected=true><a href="#" id='tab2'>Tab 2</a></div>
-        <div class="aTab" data-selected=false><a href="#" id='tab3'>Tab 3</a></div>
-        <div class='aTabPage'>This is a tab page</div>
+        <div class="aTab" data-selected=false onclick="tabClicked(event)" id='tab1'><a href="#">Tab 1</a></div>
+        <div class="aTab" data-selected=true onclick="tabClicked(event)" id='tab2'><a href="#">Tab 2</a></div>
+        <div class="aTab" data-selected=false onclick="tabClicked(event)" id='tab3'><a href="#">Tab 3</a></div>
+        <div class='aTabPage' id='tabPage1' data-selected=false style = "display: none;">This is tab page 1</div>
+        <div class='aTabPage' id='tabPage2' data-selected=true style = "display: block;">This is tab page 2</div>
+        <div class='aTabPage' id='tabPage3' data-selected=false style = "display: none;">This is tab page 3</div>
     </div>
 </body>
 </html>
