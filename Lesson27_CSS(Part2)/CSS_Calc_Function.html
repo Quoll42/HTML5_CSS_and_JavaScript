@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            border: 2px solid black;
+            width: 30px;
+            height: 50px;
+            margin: 20px 20px 20px 20px;
+        }
+        #div1 {
+            background-color: aquamarine;
+            width:calc(30% - 20px);
+        }
+        #div2 {
+            background-color: lightblue;
+            width:calc((30% / 2) - 20px);
+        }
+        #div3 {
+            background-color: paleturquoise;
+            width:max(400px, 30px); /* min and max seem to have been deprecated
+            See https://stackoverflow.com/questions/16617248/calc-of-max-or-max-of-calc-in-css */
+        }
+    </style>
+</head>
+<body>
+    <div id='div1'></div>
+    <div id='div2'></div>
+    <div id='div3'></div>
+</body>
+</html>
