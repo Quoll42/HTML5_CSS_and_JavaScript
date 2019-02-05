@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            height: 200px;
+            width: 200px;
+            border: 1px solid black;
+            margin: 50px;
+            background: #888888;
+            float: left;
+        }
+        #div2 {
+            background: #bcbcbc;
+            transform: translate(40px, -40px) scale(0.5, 0.5);
+        }
+        #div3 {
+            background: #bcbcbc;
+            transform: scale(0.5,0.5);
+
+            -webkit-transform: rotate(45deg); /* This worked fine but the next 3 lines might help with */
+            -moz-transform: rotate(45deg); /* compatibility in Mozilla firefox */
+            -ms-transform: rotate(45deg); /* and MS Internet Explorer */
+            transform: rotate(45deg);   /* Is this last line correct + useful at all? */
+
+            -webkit-transform: skew(10deg, -45deg);
+        }
+        #div4 {
+            background: #bcbcbc;
+            transform: matrix(0.5, 0.45, -0.45, 0.5, 300, 0);
+        }
+    </style>
+</head>
+<body>
+    <div id='div1'></div>
+    <div id='div2'></div>
+    <div id='div3'></div>
+    <div id='div4'></div>
+</body>
+</html>
