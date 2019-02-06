@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+    div {
+        width: 200px;
+        height: 20px;
+        margin: 50px;
+        background: black;
+        color: white;
+        transition: height 3s, color 2s, background 2s, border 2s;
+        transition-delay: 1s;
+        transition-timing-function: ease-in-out;
+    }
+    div:hover {
+        background: white;
+        color: black;
+        border: 1px solid black;
+        height: 200px;
+    }
+    </style>
+</head>
+<body>
+    <div id='div1'>Hover to expand</div>
+</body>
+</html>
