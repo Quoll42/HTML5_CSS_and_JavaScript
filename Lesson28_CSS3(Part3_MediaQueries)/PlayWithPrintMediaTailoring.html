@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @media print {
+            .noprint {
+                display: none;
+            }
+        }
+        .controls {
+            padding:15px;
+            border: 2px solid #333333;
+            width: 40px;
+            height: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>My header</h1>
+    <p>Some text that I want to print</p>
+    <p class="noprint">Some things that I don't want to print, including this input box:</p>
+    <input type="text" style="width: 400px;" class="noprint">
+    <div class="controls noprint">
+        <a onClick='window.print()' href="#">Print</a>
+    </div>
+    <p>The end.</p>
+</body>
+</html>
