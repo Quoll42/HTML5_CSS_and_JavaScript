@@ -1,0 +1,19 @@
+.noprint {
+    display: none;
+}
+th {
+    color: black;
+    background: white;
+}
+#contactList {
+    border: none;
+    margin: none;
+    padding: none;	
+}
+
+.print_only {
+    display: initial;
+    color: black;
+    font-size: 16px;
+    margin: 0px 0px 0px 33px; /*indent from the left*/
+}
