@@ -93,17 +93,6 @@ footer {
     padding-left:7px;
 }
 
-@media print {
-	.noprint {
-		display: none;
-	}
-	th {
-		color: black;
-		background: white;
-	}
-	#contactList {
-		border: none;
-		margin: none;
-		padding: none;	
-	}
+.print_only {
+	display: none;
 }

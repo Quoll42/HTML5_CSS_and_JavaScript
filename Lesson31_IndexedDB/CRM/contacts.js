@@ -78,28 +78,40 @@ function contactsScreen(mainID) {
            });
            var request = indexedDB.open('contactsDB');
            request.onsuccess = function(event) {
-               database = request.result;
+               database = request.result; //Record a reference to the database, to use later
            }
            request.onupgradeneeded = function(event) {
-               database = event.target.result;
+               database = event.target.result;  //Obtain a reference to the database
                var objectStoreContacts = database.createObjectStore('contacts',
-               {keyPath: 'id', autoincrement: true});
+                 {keyPath: 'id', autoincrement: true}); //Get ID from the id property, and autoincrement that
                var objectStoreCompanies = database.createObjectStore('companies',
-               {keyPath: 'id', autoincrement: true});
+                 {keyPath: 'id', autoincrement: true}); //Get ID from the id property, and autoincrement that
            }
            initialized = true;
         },
-        save: function(evt) {            
+        save: function(evt) {
             if ($(evt.target).parents('form')[0].checkValidity()) {
                 var fragment = $(screen).find('#contactRow')[0].content.cloneNode(true);
                 var row = $('<tr>').append(fragment);
                 var contact = this.serializeForm();
                 row = bind(row, contact);
+                this.store(contact);
                 $(row).find('time').setTime();
                 $(screen).find('table tbody').append(row);
 				$(screen).find('form :input[name]').val('');
 				$(screen).find('#contactDetails').toggle( "blind" );
 	            this.updateTableCount();
+            }
+        },
+        store: function(contact) {
+            var trans = database.transaction(["contacts"],"readwrite"); //Create tx to read/write store 'contacts'
+            var objectStore = trans.objectStore("contacts"); //Get a reference to the 'contacts' store
+            var request = objectStore.put(contact); //Attempt to put the supplied contact object into the store
+            request.onsuccess = function(event) {
+                console.log("Added a new contact " + event.target.result);
+            }
+            request.onerror = function(event) {
+                console.log("Something went wrong...")
             }
         },
         updateTableCount: function(evt) {
