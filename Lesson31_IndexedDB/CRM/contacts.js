@@ -79,13 +79,14 @@ function contactsScreen(mainID) {
            var request = indexedDB.open('contactsDB');
            request.onsuccess = function(event) {
                database = request.result; //Record a reference to the database, to use later
-           }
+               this.loadContacts();
+           }.bind(this);
            request.onupgradeneeded = function(event) {
-               database = event.target.result;  //Obtain a reference to the database
-               var objectStoreContacts = database.createObjectStore('contacts',
-                 {keyPath: 'id', autoincrement: true}); //Get ID from the id property, and autoincrement that
+               database = event.target.result; //Obtain a reference to the database
+               var objectStoreContacts = database.createObjectStore("contacts",
+                 {keyPath: "id", autoIncrement: true }); //Get ID from the id property, and autoincrement that
                var objectStoreCompanies = database.createObjectStore('companies',
-                 {keyPath: 'id', autoincrement: true}); //Get ID from the id property, and autoincrement that
+                 {keyPath: "id", autoIncrement: true }); //Get ID from the id property, and autoincrement that
            }
            initialized = true;
         },
@@ -112,6 +113,24 @@ function contactsScreen(mainID) {
             }
             request.onerror = function(event) {
                 console.log("Something went wrong...")
+            }
+        },
+        loadContacts: function() {
+            var trans = database.transaction('contacts'); //Create tx for store 'contacts' (defaults to read) 
+            var objectStore = trans.objectStore('contacts'); //Get a reference to the 'contacts' store
+            objectStore.openCursor().onsuccess = function(event) {
+                var cursor = event.target.result; //Get a reference to the cursor
+                if (cursor) {
+                    var contact = cursor.value;     
+                    var fragment = $(screen).find('#contactRow')[0].content.cloneNode(true);
+                    var row = $('<tr>');
+                    row.data().id = contact.id;
+                    row.append(fragment);
+                    row = bind(row, contact);
+                    $(row).find('time').setTime();
+                    $(screen).find('table tbody').append(row);
+                    cursor.continue(); //Causes onsuccess to be invoked again, with the next record
+                }
             }
         },
         updateTableCount: function(evt) {
