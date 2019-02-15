@@ -112,7 +112,7 @@ function contactsScreen(mainID) {
                 console.log("Added a new contact " + event.target.result);
             }
             request.onerror = function(event) {
-                console.log("Something went wrong...")
+                console.log("Something went wrong trying to add " + contact);
             }
         },
         loadContacts: function() {
@@ -137,7 +137,17 @@ function contactsScreen(mainID) {
             var rows = $(screen).find('table tbody tr')
 	        $(screen).find('table').updateFooter({'message':' contacts displayed'});
         },
-        delete: function(evt) { 
+        delete: function(evt) {
+            var contactID = $(evt.target).parents('tr').data().id;
+            trans = database.transaction('contacts','readwrite'); //Create tx to read/write store 'contacts'
+            var objectStore = trans.objectStore('contacts'); //Get a reference to the 'contacts' store
+            var request = objectStore.delete(contactID); //Attempt to delete that object from the store
+            request.onsuccess = function(event) {
+                console.log("Deleted contact with id=" + contactID);
+            }
+            request.onerror = function(event) {
+                console.log("Something went wrong trying to delete contact with id=" + contactID);
+            }
             $(evt.target).parents('tr').remove();
             this.updateTableCount();
         },
