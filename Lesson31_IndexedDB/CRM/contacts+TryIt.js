@@ -78,7 +78,8 @@ function contactsScreen(mainID) {
            });
            var request = indexedDB.open('contactsDB');
            request.onsuccess = function(event) {
-               database = request.result; //Record a reference to the database, to use later
+               database = request.result; //Get a reference to the database, for use later
+               this.configureData();
                this.loadContacts();
            }.bind(this);
            request.onupgradeneeded = function(event) {
@@ -90,18 +91,38 @@ function contactsScreen(mainID) {
            }
            initialized = true;
         },
+        configureData: function() {
+            var trans = database.transaction('companies','readwrite'); //Create tx to read/write store 'companies'
+            var objectStore = trans.objectStore('companies');//Get a reference to the 'companies' store
+            objectStore.openCursor().onsuccess = function(event) {
+                var cursor = event.target.result;
+                if (!cursor) {
+                    objectStore.put( {name:'ABC Incorporated'} );
+                    objectStore.put( {name:'XZY Ltd'} );
+                    objectStore.put( {name:'ACME International'} );
+                }
+            }
+        },
         save: function(evt) {
             if ($(evt.target).parents('form')[0].checkValidity()) {
                 var fragment = $(screen).find('#contactRow')[0].content.cloneNode(true);
                 var row = $('<tr>').append(fragment);
                 var contact = this.serializeForm();
-                row = bind(row, contact);
-                this.store(contact);
-                $(row).find('time').setTime();
-                $(screen).find('table tbody').append(row);
-				$(screen).find('form :input[name]').val('');
-				$(screen).find('#contactDetails').toggle( "blind" );
-	            this.updateTableCount();
+                //console.log(contact);
+                var trans = database.transaction(['companies']); //Create tx for store 'companies' (defaults to read)
+                var objectStoreCompanies = trans.objectStore('companies'); //Get a reference to the 'companies' store
+                var requestCompanies = objectStoreCompanies.get(parseInt(contact.companyName));
+                requestCompanies.onsuccess = function(event) {
+                    var company = event.target.result;
+                    contact.companyName = company;
+                    row = bind(row, contact);
+                    this.store(contact);
+                    $(row).find('time').setTime();
+                    $(screen).find('table tbody').append(row);
+                    $(screen).find('form :input[name]').val('');
+                    $(screen).find('#contactDetails').toggle( "blind" );
+                    this.updateTableCount();
+                }.bind(this);
             }
         },
         store: function(contact) {
@@ -131,7 +152,8 @@ function contactsScreen(mainID) {
                     $(screen).find('table tbody').append(row);
                     cursor.continue(); //Causes onsuccess to be invoked again, with the next record
                 }
-            }
+                this.updateTableCount();
+            }.bind(this);
         },
         updateTableCount: function(evt) {
             var rows = $(screen).find('table tbody tr')
@@ -169,7 +191,11 @@ function bind(template, obj) {
     $.each(template.find('[data-property-name]'), function(indx, val) {
         var field = $(val).data().propertyName;
         if (obj[field]) {
-            $(val).text(obj[field]);
+            if (typeof obj[field] == "object") {
+                $(val).text(obj[field].name);
+            } else {
+                $(val).text(obj[field]);
+            }
             if ($(val).is('time')) {
                 $(val).attr('datetime', obj[field]);
             }
