@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    Use this web page with your browser's console open.
+    <p><a href="#" onclick="findLargest()">Long operation</a></p>
+    <p><a href="#" onclick="getDate()">Short operation</a></p>
+</body>
+<script>
+    function getDate() {
+        console.log('The time is '+new Date());
+    }
+    function findLargest() {
+        var max = 0;
+        var iterations = 0;
+        function findLargestSub() {
+            while (true) {
+                iterations++;
+                if (iterations == 200000000) {
+                    console.log(max);
+                    break;
+                } else if (iterations % 10000000 == 0) {
+                    setTimeout(findLargestSub,10);
+                    break;
+                }
+                max = Math.max(max,Math.random());
+            }
+        }
+        findLargestSub();
+    }
+</script>
+</html>

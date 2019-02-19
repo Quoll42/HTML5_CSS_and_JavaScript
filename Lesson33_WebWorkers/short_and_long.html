@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    Use this web page with your browser's console open.
+    <p><a href="#" onclick="findLargest()">Long operation</a></p>
+    <p><a href="#" onclick="getDate()">Short operation</a></p>
+</body>
+<script>
+    function getDate() {
+        console.log('The time is '+new Date());
+    }
+    function findLargest() {
+        var max = 0;
+        for (var i=0; i <= 2000000000; i++) {
+            max = Math.max(max,Math.random());
+        };
+        console.log(max);
+    }
+</script>
+</html>

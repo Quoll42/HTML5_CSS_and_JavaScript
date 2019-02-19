@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p></p>
+    <button
+        style='margin: 20px 0 0 20px;'
+        onclick="generate_and_sort_random_numbers(5000000);">
+        Generate & Sort random numbers
+    </button>
+</body>
+<script>
+    function numberWithCommas(x) { //I could instead have used .toLocaleString()
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function generate_and_sort_random_numbers(num) {
+        result = [];
+        for (i=0 ; i<num; i++) {
+            result.push(Math.random());
+        }
+        result.sort();
+        alert('Finished.\nI generated ' + numberWithCommas(num) + ' numbers\nThe minimum number is ' + result[0]);
+    }
+</script>
+</html>
