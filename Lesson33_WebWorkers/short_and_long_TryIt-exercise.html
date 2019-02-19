@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    Use this web page with your browser's console open.
+    <p><a href="#" onclick="findLargestUsingWorker()">Long operation</a></p>
+    <p><a href="#" onclick="getDate()">Short operation</a></p>
+</body>
+<script>
+    function getDate() {
+        console.log('The time is '+new Date());
+    }
+function findLargestUsingWorker() {
+    var worker = new Worker('find_number(TryIt_worker).js'); //Create a worker
+    worker.addEventListener("message", function(evt) { //Prepare to hear the worker's message
+        var result = evt.data; //and then extract data from that message
+        console.log('Largest found was: ' + result);
+    } , false);
+    worker.postMessage("Begin now"); //Post the worker a message to start it
+}
+</script>
+</html>

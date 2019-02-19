@@ -34,13 +34,15 @@
         function(evt) {
             evt.preventDefault();
             var number = $('#theNumber').val();
-            var worker = new Worker('random.js');
-            worker.addEventListener('message', function(evt) {
-                var result = evt.data;
+            var worker = new Worker('random.js'); //Create a worker (using a relative URL)
+
+            worker.addEventListener('message', function(evt) { //Prepare to hear the worker's message
+                var result = evt.data; //and then extract data from that message
                 var row = $('<tr>').append('<td>'+number+'</td>').append('<td>'+result+'</td>');
                 $('#numberList table tbody').append(row);
             }, false);
-            worker.postMessage(parseInt(number));
+
+            worker.postMessage(parseInt(number)); //Post the worker a message to start it
         }
     );
 </script>
