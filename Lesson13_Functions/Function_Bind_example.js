@@ -1,5 +1,5 @@
 function getCount() {
-    return this.myCount++; //Note the use of *this.* And that myCount isn't defined.
+    return this.myCount++; //Note the use of *this.* And that myCount isn't defined (it will be supplied...)
 }
 
 var counter2 = getCount.bind({myCount:100});
