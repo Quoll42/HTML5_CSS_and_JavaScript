@@ -2,7 +2,6 @@ function contactsScreen(mainID) {
     var screen = mainID;
     var initialized = false;
     var database = null;
-    var numContactsToBeStored = 0;
     
     return {
          init: function() {
@@ -21,6 +20,7 @@ function contactsScreen(mainID) {
                     this.delete(evt);
                 }.bind(this)
             );
+            
             $(screen).find('textarea').keyup(function(evt) {
                 if ($(evt.target).siblings('.textCount')) {
                     var characters = $(evt.target).val().length;
@@ -40,26 +40,6 @@ function contactsScreen(mainID) {
 		           }
 	           }
             };
-
-            //====== Contacts file import ======
-            $(screen).find('#inputJSONFile').change(function(evt) {
-                var reader = new FileReader(); //Create a file reader. It has methods for reading selected files.
-                reader.onload = function(evt) { //The onload event will trigger when a file has been read
-                    //console.log('New file selected:');
-                    //console.log(evt.target.result); //Show the file's contents
-                    var contacts = JSON.parse(evt.target.result);
-                    for (var i=0; i<contacts.length; i++) {
-                        this.store(contacts[i],true); //Using the screen objects store method to save the contact
-                    }
-                    /*location.reload();*/ /*Instead of updating the table after each contact is added,
-                                       just reload the web page when all contacts have been added.*/
-                }.bind(this); //Using 'bind' to provide the function with the screen object
-                reader.onerror = function(evt) {
-                    console.log('Something went wrong reading the file');
-                }
-                reader.readAsText(evt.target.files[0]); //Request to read the file into a JavaScript string
-                //The above assumes only 1 file was selected, not multiple. Afterwards, 'onload' is triggered.
-            }.bind(this)); //Using 'bind' to provide the function with the screen object
  
             var email = document.getElementById('emailAddress')
             email.oninvalid = function(e) {
@@ -112,32 +92,14 @@ function contactsScreen(mainID) {
            initialized = true;
         },
         configureData: function() {
-            var trans = database.transaction('companies','readwrite');//Create tx to read/write store 'companies'
-            var objectStore = trans.objectStore('companies'); //Get a reference to the 'companies' store
+            var trans = database.transaction('companies','readwrite'); //Create tx to read/write store 'companies'
+            var objectStore = trans.objectStore('companies');//Get a reference to the 'companies' store
             objectStore.openCursor().onsuccess = function(event) {
                 var cursor = event.target.result;
                 if (!cursor) {
                     objectStore.put( {name:'ABC Incorporated'} );
                     objectStore.put( {name:'XZY Ltd'} );
                     objectStore.put( {name:'ACME International'} );
-                }
-                this.populateCompanyNames();
-            }.bind(this);
-        },
-        populateCompanyNames: function() { //Copy company names from IndexedDB to the Add-Contact form's options
-            var companySelectElement = document.getElementById('companySelect');
-            var trans = database.transaction('companies');
-            var objectStoreCompanies = trans.objectStore('companies');
-            objectStoreCompanies.openCursor().onsuccess = function(event) {
-                var cursor = event.target.result; //Get a reference to the cursor
-                if (cursor) {
-                    //console.log(cursor.value.name + ' / ' + cursor.value.id);
-                    newOptionElement = document.createElement('option');
-                    newOptionElement.value = cursor.value.id;
-                    optionText = document.createTextNode(cursor.value.name);
-                    newOptionElement.appendChild(optionText);
-                    companySelectElement.appendChild(newOptionElement);
-                    cursor.continue(); //Causes onsuccess to be invoked again, with the next record 
                 }
             }
         },
@@ -146,7 +108,7 @@ function contactsScreen(mainID) {
                 var fragment = $(screen).find('#contactRow')[0].content.cloneNode(true);
                 var row = $('<tr>').append(fragment);
                 var contact = this.serializeForm();
-                //console.log(contact);
+                console.log(contact);
                 var trans = database.transaction(['companies']); //Create tx for store 'companies' (defaults to read)
                 var objectStoreCompanies = trans.objectStore('companies'); //Get a reference to the 'companies' store
                 var requestCompanies = objectStoreCompanies.get(parseInt(contact.companyName));
@@ -163,17 +125,12 @@ function contactsScreen(mainID) {
                 }.bind(this);
             }
         },
-        store: function(contact, reloadPageWhenAllDone) {
-            numContactsToBeStored++; //We've received another contact to store
+        store: function(contact) {
             var trans = database.transaction(["contacts"],"readwrite"); //Create tx to read/write store 'contacts'
             var objectStore = trans.objectStore("contacts"); //Get a reference to the 'contacts' store
             var request = objectStore.put(contact); //Attempt to put the supplied contact object into the store
             request.onsuccess = function(event) {
-                numContactsToBeStored--; //We've stored another contact
                 console.log("Added a new contact " + event.target.result);
-                if (false && reloadPageWhenAllDone && numContactsToBeStored==0) {
-                    location.reload();
-                }
             }
             request.onerror = function(event) {
                 console.log("Something went wrong trying to add " + contact);
@@ -204,6 +161,8 @@ function contactsScreen(mainID) {
         },
         delete: function(evt) {
             var contactID = $(evt.target).parents('tr').data().id;//Obtain id of the contact being deleted
+            $(evt.target).parents('tr').remove();
+            this.updateTableCount();
             trans = database.transaction('contacts','readwrite'); //Create tx to read/write store 'contacts'
             var objectStore = trans.objectStore('contacts'); //Get a reference to the 'contacts' store
             var request = objectStore.delete(contactID); //Attempt to delete that object from the store
@@ -213,8 +172,6 @@ function contactsScreen(mainID) {
             request.onerror = function(event) {
                 console.log("Something went wrong trying to delete contact with id=" + contactID);
             }
-            $(evt.target).parents('tr').remove();
-            this.updateTableCount();
         },
         serializeForm: function() {
             var inputFields = $(screen).find('form :input');
