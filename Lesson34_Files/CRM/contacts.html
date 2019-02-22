@@ -1,3 +1,7 @@
+<!-- There are 2 known problems:
+1. If you Add a contact and then try to delete it, the ID isn't retrieved, causing the delete to fail (unless you reload the page first, whicb sorts of the ID). 
+2. When you import contacts, the "Company name" gets a number in it instread of that number being used to look up a name.
+-->
 <!DOCTYPE html>
 <html lang="en" manifest="contacts.appcache">
 <head>
@@ -48,7 +52,8 @@
 			<input name="lastContacted" type="text" class="validated"/>
 		</div>
 		<div class="formRow">
-			<input style="width:70px" type="submit" title="Save" value="Save"/>
+			<input style="width:70px; margin: 0 0 0 155px" type="submit" title="Save" value="Save"/>
+			<!--<button onclick="document.getElementById('contactDetails').style.display='none'">Cancel</button>-->
 		</div>
 	</form>
 	</section>
@@ -109,4 +114,3 @@ $(document).ready(function(evt) {
 </script>
 
 </html>
-

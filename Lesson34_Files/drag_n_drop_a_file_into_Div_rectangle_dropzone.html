@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+         <meta charset="utf-8">    
+         <style>
+			.box {
+				height:200px;
+				width:400px;
+				display:inline-block;
+				text-align:center;
+				border: 2px dashed black;
+				line-height: 200px;
+				margin: 50px;
+			}
+         </style>
+</head>
+<body>
+	<div class="box" ondrop="drop(event)" ondragover="allowDrop(event)">Drag a file onto me</div>
+	<div id="fileDetails"></div>
+	<div id="fileContents"></p></div>
+</body>
+
+			<script>
+			function allowDrop(evt) {
+				evt.preventDefault();
+			}
+
+			function drop(evt) {
+			    evt.preventDefault();
+			    var file = evt.dataTransfer.files[0];
+			    var reader = new FileReader(); //Create a FileReader. It has methods for reading selected files
+			    reader.onload = function(evt) {//The onload event will trigger when a file has been read
+					var contents = evt.target.result;
+					
+			        document.getElementById('fileContents').innerHTML = contents;
+			    }
+				reader.readAsText(file);
+				document.getElementById('fileDetails').innerHTML = '"'+file.name+'":';
+			}			
+			</script>
+</html>

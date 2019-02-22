@@ -1,0 +1,19 @@
+<!--Changing HTML Content
+
+The easiest way to modify the content of an HTML element is by using the innerHTML property.
+
+To change the content of an HTML element, use this syntax:
+document.getElementById(id).innerHTML = new HTML
+
+This example from https://www.w3schools.com/js/js_htmldom_html.asp
+changes the content of a <p> element:                            -->
+
+<html>
+<body>
+    <p id="p1">Hello World!</p>
+
+    <script>
+        document.getElementById("p1").innerHTML = "New text!";
+    </script>
+</body>
+</html>

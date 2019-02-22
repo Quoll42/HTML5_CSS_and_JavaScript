@@ -1,3 +1,8 @@
+/* There are 2 known problems:
+1. If you Add a contact and then try to delete it, the ID isn't retrieved, causing the delete to fail (unless you reload the page first, whicb sorts of the ID). 
+2. When you import contacts, the "Company name" gets a number in it instread of that number being used to look up a name.
+*/
+
 function contactsScreen(mainID) {
     var screen = mainID;
     var initialized = false;
@@ -78,6 +83,7 @@ function contactsScreen(mainID) {
 	             event.preventDefault();
 	             $(screen).find('#contactDetails').toggle( "blind" );
            });
+           
            $(screen).find('tbody').on("mouseenter mouseleave", "td > time", function(evt) {
                if (evt.type === "mouseenter") {
                     $(evt.target).siblings('.overlay').slideDown();
@@ -154,11 +160,11 @@ function contactsScreen(mainID) {
                     var company = event.target.result;
                     contact.companyName = company;
                     row = bind(row, contact);
-                    this.store(contact);
                     $(row).find('time').setTime();
                     $(screen).find('table tbody').append(row);
                     $(screen).find('form :input[name]').val('');
                     $(screen).find('#contactDetails').toggle( "blind" );
+                    this.store(contact,true);
                     this.updateTableCount();
                 }.bind(this);
             }
