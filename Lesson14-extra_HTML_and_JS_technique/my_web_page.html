@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>How to supply JavaScript methods to a webpage</title>
+    <script src="my_web_pages_code.js"></script>
+</head>
+<body>
+    <header><h1>Example of supplying JavaScript methods into a web page</h1></header>
+    <main id='theMainPart' style="border: 1px solid #999999; margin: 0 0 15px 0; padding: 10px;">
+        <p>In Dane Cameron's book “HTML5, JavaScript, and jQuery 24-hour Trainer” 
+        the lesson 14 'Try It' exercise introduces an interesting approach for 
+        combining JavaScript with an HTML file, a way that allows <em>methods</em>
+        to be connected with the <em>main</em> part of the HTML web page :-)</p>
+        <p>This is a simple example that I made to show that approach.</p>
+        <button>Press me</button>
+        <button>Press me too</button>
+        <button>Button three</button>
+    </main>
+    <footer style="font-size: 0.7em">This is a footer, down at the bottom of the page.</footer>
+</body>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(event) { //When the DOM is loaded:
+        myAppMain = provideMethodsForMyApp(document.getElementById('theMainPart')); //Pass the mainElement & get methods
+        myAppMain.init();   //Now I can use methods I put 'on' the main part of my web app/page.
+                            //but I will only use init() here, as the rest can be done in the JS file.
+    });
+    
+</script>
+</html>
