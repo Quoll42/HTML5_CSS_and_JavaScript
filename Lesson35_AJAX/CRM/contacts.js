@@ -33,11 +33,36 @@ function contactsScreen(mainID) {
                     
                 }
             });
+
+            //Two examples using jQuery to do AJAX:
+            //1. The simple way:
             $(screen).find('#importFromServer').click(function(evt) {
                 $.get("contacts.json", function(data) {
                     console.log(data);
                 });
             });
+
+            //2. The more controlling way:
+            $(screen).find('#importFromServer').click(function(evt) {
+                $.ajax({
+                    url: "contacts.json",
+                    dataType: "json",
+                    cache: false,
+                    type: "GET",
+                    timeout: 5000, //milliseconds
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log(errorThrown);
+                    }
+                });
+            });
+
+            //The following code waits 5 seconds then gets HTML (instead of JSON) and inserts it into the main HTML file.
+            setTimeout(function() { $('#notifications').load('notifications.html'); }, 5000); //into the 'notifications' section
+            //More generally, use an exra parameter to POST to the server, like this:
+            // $('#notifications').load('notifications.html', {name: 'Andrew'});
 
             $(':input[required]').siblings('label').append($('<span>').text('*').addClass('requiredMarker'));
             var contactName = document.getElementById('contactName')
