@@ -97,6 +97,14 @@
 			<a href="#" id='importFromServer'>Import from Server</a>
 		</div>
 	</section>
+	<section id="chooseTheme">
+		<div class='formRow'>
+			Choose a theme
+			<a href="#" class='theme' style='background: #FF5E3A' data-theme-file='red_theme.js'></a>
+			<a href="#" class='theme' style='background: #FF9500' data-theme-file='orange_theme.js'></a>
+			<a href="#" class='theme' style='background: #C644FC' data-theme-file='purple_theme.js'></a>
+		</div>
+	</section>
 
 	<template id="contactRow">
 		<td data-property-name="contactName"></td>
@@ -120,7 +128,10 @@ $('[name="lastContacted"]').datepicker({
 $(document).ready(function(evt) {
     var mainElement = document.getElementById('contactScreen');
     var screen = contactsScreen(mainElement);
-    screen.init();
+	screen.init();
+	if (localStorage.theme) {
+        $.getScript(localStorage.theme);
+    }
 });
 </script>
 

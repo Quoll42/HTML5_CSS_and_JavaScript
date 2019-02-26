@@ -33,6 +33,13 @@ function contactsScreen(mainID) {
                     
                 }
             });
+            
+            $(screen).find('.theme').click(function(evt) {
+                var url = $(evt.target).data().themeFile;
+                $.getScript(url, function() {
+                    localStorage.setItem('theme', url);
+                });
+            });
 
             //Two examples using jQuery to do AJAX:
             //1. The simple way:
