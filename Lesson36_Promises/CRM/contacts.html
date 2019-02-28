@@ -131,7 +131,46 @@ $(document).ready(function(evt) {
 	screen.init();
 	if (localStorage.theme) {
         $.getScript(localStorage.theme);
-    }
+	}
+	
+	//Exploring 'promises'. You can register more than 1 callback for each state:
+	var promise = $.get('contacts.json'); //Request "contacts.json"
+	promise.done( function(data) {
+		console.log('1st callback invoked');
+	} );
+	promise.done( function(data) {
+		console.log('2nd callback invoked');
+	} );
+	
+	//Exploring 'promises' further. Registering more than 1 callback for a failing state:
+	var promise = $.get('non_existant.json'); //Request a file that doesn't exist on the server
+	promise.fail( function(data) {
+		console.log('The above error was created intentionally.');
+		console.log('1st fail callback invoked');
+	} );
+	promise.fail( function(data) {
+		console.log('2nd fail callback invoked');
+	} );
+
+	//Exploring 'promises' further still. Modifying the response being passed in a chain of 2 then methods:
+	$.get('contacts.json').then( function(data) {
+		console.log('1st callback involved with ' + data.length + ' contacts');
+		data = data.filter(function(c) {
+			return c.companyName == '3';
+		});
+		return data;
+	}).then( function(data) {
+		console.log('1st callback involved with ' + data.length + ' contacts');
+	});
+
+	//Exploring 'promises' further more. Register a callback that is invoked when more than 1 promise reaches a state
+	let promise1 = $.get('contacts.json');
+	let promise2 = $.get('contacts2.json');
+	$.when(promise1,promise2).done( function(data1, data2) {
+		console.log('Data1 contains ' + data1.length + ' contacts.');
+		console.log('Data2 contains ' + data2.length + ' contacts.');
+	} );
+
 });
 </script>
 
