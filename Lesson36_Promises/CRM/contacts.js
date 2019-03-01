@@ -44,7 +44,9 @@ function contactsScreen(mainID) {
             //Two examples using jQuery to do AJAX:
             //1. The simple way:
             $(screen).find('#importFromServer').click(function(evt) {
-                $.get("contacts.json", function(data) {
+                var promise = findContacts();
+                promise.done( function(data) {
+                    console.log('Data has been retrieved');
                     console.log(data);
                 });
             });
