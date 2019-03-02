@@ -58,7 +58,7 @@ function contactsScreen(mainID) {
                     dataType: "json",
                     cache: false,
                     type: "GET",
-                    timeout: 5000, //milliseconds
+                    timeout: 3000, //milliseconds
                     success: function(data) {
                         console.log(data);
                     },
@@ -69,7 +69,7 @@ function contactsScreen(mainID) {
             });
 
             //The following code waits 5 seconds then gets HTML (instead of JSON) and inserts it into the main HTML file.
-            setTimeout(function() { $('#notifications').load('notifications.html'); }, 5000); //into the 'notifications' section
+            setTimeout(function() { $('#notifications').load('notifications.html'); }, 3000); //into the 'notifications' section
             //More generally, use an exra parameter to POST to the server, like this:
             // $('#notifications').load('notifications.html', {name: 'Andrew'});
 
@@ -88,22 +88,13 @@ function contactsScreen(mainID) {
 
             //====== Contacts file import ======
             $(screen).find('#inputJSONFile').change(function(evt) {
-                var reader = new FileReader(); //Create a file reader. It has methods for reading selected files.
-                reader.onload = function(evt) { //The onload event will trigger when a file has been read
-                    //console.log('New file selected:');
-                    //console.log(evt.target.result); //Show the file's contents
-                    var contacts = JSON.parse(evt.target.result);
+                var promise = readTextFileWithPromise(evt.target.files[0]);
+                promise.done( function(data) {
+                    var contacts = JSON.parse(data);
                     for (var i=0; i<contacts.length; i++) {
                         this.store(contacts[i],true); //Using the screen objects store method to save the contact
                     }
-                    /*location.reload();*/ /*Instead of updating the table after each contact is added,
-                                       just reload the web page when all contacts have been added.*/
-                }.bind(this); //Using 'bind' to provide the function with the screen object
-                reader.onerror = function(evt) {
-                    console.log('Something went wrong reading the file');
-                }
-                reader.readAsText(evt.target.files[0]); //Request to read the file into a JavaScript string
-                //The above assumes only 1 file was selected, not multiple. Afterwards, 'onload' is triggered.
+                }.bind(this)); //Using 'bind' to provide the function with the screen object
             }.bind(this)); //Using 'bind' to provide the function with the screen object
  
             var email = document.getElementById('emailAddress')
@@ -217,7 +208,7 @@ function contactsScreen(mainID) {
             request.onsuccess = function(event) {
                 numContactsToBeStored--; //We've stored another contact
                 console.log("Added a new contact " + event.target.result);
-                if (false && reloadPageWhenAllDone && numContactsToBeStored==0) {
+                if (reloadPageWhenAllDone && numContactsToBeStored==0) {
                     location.reload();
                 }
             }
@@ -291,4 +282,15 @@ function bind(template, obj) {
         }
     });
     return template;
+}
+
+//The following function adds PROMISE functionality to FileReader's readAsText. Its gets used above for reading a file.
+function readTextFileWithPromise(file) {
+    deferred = $.Deferred(); //This object allows you to create promises and control their state transitions
+    var reader = new FileReader(); //Create a FileReader
+    reader.onload = function(evt) { //The onload event will trigger when a file has been read
+        deferred.resolve(evt.target.result);
+    }
+    reader.readAsText(file); //Request to read the file into a JavaScript string
+    return deferred.promise();
 }
