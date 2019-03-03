@@ -1,0 +1,183 @@
+<!-- There are 2 known problems:
+1. If you Add a contact and then try to delete it, the ID isn't retrieved, causing the delete to fail (unless you reload the page first, whicb sorts of the ID). 
+2. When you import contacts, the "Company name" gets a number in it instread of that number being used to look up a name.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Contacts</title>
+	<link rel="stylesheet" media="all"   type="text/css" href="contacts.css">
+	<link rel="stylesheet" media="print" type="text/css" href="contacts_print.css">
+	<link rel="stylesheet" type="text/css" href="jquery-ui.css">  	
+	<script src="jquery-3.3.1.js"></script> <!--Dane used "jquery-2.1.1.js" --> 
+	<script src="find.contacts.js"></script>
+	<script src="contacts.js"></script>
+	<script src="jquery-ui.js"></script>		
+	<script src="jquery-time.js"></script>		
+	<script src="jquery-tables.js"></script>
+</head>
+<body>
+	<header>Contacts</header>
+	<h1 class='print_only'>Printed from CRM</h1>
+	<main id="contactScreen">
+	<section id="contactDetails" style="display:none"><h2>Contact details</h2>
+	<form method="post">
+		<div class="formRow">
+			<div class="grid_quarter">
+				<label for="contactName">Contact name</label>
+				<input required autofocus autocomplete="off" name="contactName" type="text" class="validated" id="contactName" pattern=".{5,100}"/>
+			</div>
+			<div class="grid_quarter">
+				<label for="phoneNumber">Phone number</label>
+				<input required pattern="[0-9() ]{5,15}" placeholder="Include area code" name="phoneNumber" type="tel"   id="phoneNumber" class="validated" />
+			</div>
+			<div class="grid_quarter">
+				<label for="emailAddress">Email address</label>
+				<input required name="emailAddress" id="emailAddress" type="email" class="validated"/>
+			</div>
+			<div class="grid_quarter">
+				<label for="companyName">Company name</label>
+				<select required name="companyName" id='companySelect' class="validated">
+					<option value="">Please select</option>
+					<!--This will be auto-populated by JavaScript reading from IndexedDB--> 
+				</select>
+			</div>
+		</div>
+		<div class="formRow">
+			<div class="grid_half">
+				<label for="notes">Notes</label>
+				<textarea cols="40" rows="6" name="notes" class="validated" maxlength="1000"></textarea>
+				<div class="textCount"></div>
+			</div>
+			<div class="grid_quarter">
+				<label for="lastContacted">Last contacted</label>
+				<input name="lastContacted" type="text" class="validated"/>
+			</div>
+		</div>
+		<div class="formRow">
+			<input style="width:70px; margin: 0 0 0 155px" type="submit" title="Save" value="Save"/>
+			<!--<button onclick="document.getElementById('contactDetails').style.display='none'">Cancel</button>-->
+		</div>
+	</form>
+	</section>
+	<section id="contactList">
+	<!--table>
+		<thead>
+			<th>Contact name</th>
+			<th>Phone number</th>
+			<th>Email address</th>
+			<th>Company name</th>
+			<th>Last contacted</th>
+			<th class="noprint">Actions</th>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="6">0 contacts displayed</td>
+			</tr>
+		</tfoot>
+		<tbody>
+		</tbody>
+		<caption>Sales leads</caption>
+	</table-->
+
+	<section id='notifications'> <!--This empty section will have an HTML fragment inserted into it-->
+	</section>
+
+	<div class="controls noprint">
+		<a href="#" id="addContact">Add a new contact</a>
+		<a onClick='window.print()' href="#">Print</a>
+	</div>
+	</section>
+
+	<section id='fileImport'>
+		<div class='formRow'>
+			<label for="inputJSONFile">Import contacts</label>
+			<input type="file" name="inputJSONFile" id="inputJSONFile">
+		</div>
+	</section>
+	<section id="serverImport">
+		<div class='formRow'>
+			<a href="#" id='importFromServer'>Import from Server</a> (see in the console log for the effect)
+		</div>
+	</section>
+	<section id="chooseTheme">
+		<div class='formRow'>
+			Choose a theme
+			<a href="#" class='theme' style='background: #FF5E3A' data-theme-file='red_theme.js'></a>
+			<a href="#" class='theme' style='background: #FF9500' data-theme-file='orange_theme.js'></a>
+			<a href="#" class='theme' style='background: #C644FC' data-theme-file='purple_theme.js'></a>
+		</div>
+	</section>
+
+	<template id="contactRow">
+		<td data-property-name="contactName"></td>
+		<td data-property-name="phoneNumber"></td>
+		<td data-property-name="emailAddress"></td>
+		<td data-property-name="companyName"></td>
+		<td><time data-property-name="lastContacted"></time>
+		<div data-property-name="notes" class="overlay"></div></td>
+		<td><a href="#" class="noprint" data-delete-button>Delete</a></td>
+     </template>
+	</main>
+	<footer>Copyright 2014</footer>
+</body>
+
+<script>
+$('[name="lastContacted"]').datepicker({
+    minDate: "-6m",
+    maxDate: 0
+});
+
+$(document).ready(function(evt) {
+    var mainElement = document.getElementById('contactScreen');
+    var screen = contactsScreen(mainElement);
+	screen.init();
+	if (localStorage.theme) {
+        $.getScript(localStorage.theme);
+	}
+	
+	//Exploring 'promises'. You can register more than 1 callback for each state:
+	var promise = $.get('contacts.json'); //Request "contacts.json"
+	promise.done( function(data) {
+		console.log('1st callback invoked');
+	} );
+	promise.done( function(data) {
+		console.log('2nd callback invoked');
+	} );
+	
+	//Exploring 'promises' further. Registering more than 1 callback for a failing state:
+	var promise = $.get('non_existant.json'); //Request a file that doesn't exist on the server
+	promise.fail( function(data) {
+		console.log('The above error was created intentionally.');
+		console.log('1st fail callback invoked');
+	} );
+	promise.fail( function(data) {
+		console.log('2nd fail callback invoked');
+	} );
+
+	//Exploring 'promises' further still. Modifying the response being passed in a chain of 2 then methods:
+	$.get('contacts.json').then( function(data) {
+		console.log('1st callback involved with ' + data.length + ' contacts');
+		data = data.filter(function(c) {
+			return c.companyName == '3';
+		});
+		return data;
+	}).then( function(data) {
+		console.log('1st callback involved with ' + data.length + ' contacts');
+	});
+
+	//Exploring 'promises' further more. Register a callback that is invoked when more than 1 promise reaches a state
+	let promise1 = $.get('contacts.json');
+	let promise2 = $.get('contacts2.json');
+	$.when(promise1,promise2).done( function(data1, data2) {
+		console.log('Data1 contains ' + data1.length + ' contacts.');
+		console.log('Data2 contains ' + data2.length + ' contacts.');
+	} );
+
+});
+</script>
+
+</html>
