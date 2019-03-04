@@ -64,13 +64,13 @@
 	</form>
 	</section>
 	<section id="contactList">
-	<!--table>
+	<table>
 		<thead>
 			<th>Contact name</th>
-			<th>Phone number</th>
-			<th>Email address</th>
-			<th>Company name</th>
-			<th>Last contacted</th>
+			<th class="medium-suppressed">Phone number</th>
+			<th class="small-suppressed">Email address</th>
+			<th class="small-suppressed">Company name</th>
+			<th class="tiny-suppressed">Last contacted</th>
 			<th class="noprint">Actions</th>
 		</thead>
 		<tfoot>
@@ -81,7 +81,7 @@
 		<tbody>
 		</tbody>
 		<caption>Sales leads</caption>
-	</table-->
+	</table>
 
 	<section id='notifications'> <!--This empty section will have an HTML fragment inserted into it-->
 	</section>
@@ -114,12 +114,19 @@
 
 	<template id="contactRow">
 		<td data-property-name="contactName"></td>
-		<td data-property-name="phoneNumber"></td>
-		<td data-property-name="emailAddress"></td>
-		<td data-property-name="companyName"></td>
-		<td><time data-property-name="lastContacted"></time>
-		<div data-property-name="notes" class="overlay"></div></td>
-		<td><a href="#" class="noprint" data-delete-button>Delete</a></td>
+		<td class="medium-suppressed" data-property-name="phoneNumber"></td>
+		<td class="small-suppressed" data-property-name="emailAddress"></td>
+		<td class="small-suppressed" data-property-name="companyName"></td>
+		<td class="tiny-suppressed">
+			<time data-property-name="lastContacted"></time>
+			<div class="overlay">
+				<div class="medium-displayed" data-property-name="phoneNumber"></div>
+				<div class="small-displayed" data-property-name="emailAddress"></div>
+				<div class="small-displayed" data-property-name="companyName"></div>
+				<div data-property-name="notes"></div>
+			</div></td>
+		<td>
+		<a href="#" class="noprint" data-delete-button>Delete</a></td>
      </template>
 	</main>
 	<footer>Copyright 2014</footer>

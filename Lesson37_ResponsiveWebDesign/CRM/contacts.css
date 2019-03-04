@@ -1,3 +1,39 @@
+@media (max-width: 600px) {
+	.medium-suppressed {
+		display: none;
+	}
+}
+
+@media (max-width: 450px) {
+	.small-suppressed {
+		display: none;
+	}
+}
+
+@media (max-width: 300px) {
+	.tiny-suppressed {
+		display: none;
+	}
+}
+
+@media (min-width: 650px) {
+	.medium-displayed {
+		display: none;
+	}
+}
+
+@media (min-width: 450px) {
+	.small-displayed {
+		display: none;
+	}
+}
+
+@media (min-width: 300px) {
+	.tiny-displayed {
+		display: none;
+	}
+}
+
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0;
@@ -7,7 +43,7 @@ body {
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
-    padding:5px;
+    padding: 0.4em;
 }
 
 thead {
@@ -46,8 +82,8 @@ footer {
 
 #contactDetails, #contactList {
 	border: 1px solid #999999;
-	margin: 15px;
-	padding:15px;
+	margin: 1.5em;
+	padding: 1.5em;
 }
 
 label {
@@ -75,7 +111,7 @@ input, select, textarea {
 }
 
 .formRow {
-	margin-bottom:10px;
+	margin-bottom: 1em;
 }
 
 .validated:invalid {
@@ -87,24 +123,27 @@ input, select, textarea {
 }
 
 .controls {
-    padding:15px;
+    padding: 1.5em;
 }
 
 .overlay {
     position: fixed;
-	height: 100px;
-	width: 300px;
+	height: 60%;
+	max-height: 10em;
+	width: 70%;
+	max-width: 15em;
+	margin-left: -5em;
 	border: 1px solid #333;
 	background: #eee;
 	display: none;
 	z-index:1;
-	padding:10px;
+	padding:1em;
 	color: #333333 !important;
 }
 
 .requiredMarker {
     color: red;
-    padding-left:7px;
+    padding-left: 0.6em;
 }
 
 .print_only {
@@ -112,18 +151,19 @@ input, select, textarea {
 }
 
 #fileImport , #serverImport, #chooseTheme {
-	margin: 20px;
+	margin: 2em;
 	border: 1px solid #999999;
-	border-radius: 10px;
-	width: 400px;
-	padding: 10px 10px 0px 10px;
+	border-radius: 1em;
+	width: 50%;
+	min-width: 12em;
+	padding: 1em 1em 0 1em;
 	background: #DAECFF;
 }
 
 .theme {
-	width: 20px;
-	height: 20px;
+	width: 1.5em;
+	height: 1.5em;
 	border: 1px solid #999999;
-	border-radius: 3px;
+	border-radius: 0.2em;
 	display: inline-block;
 }
