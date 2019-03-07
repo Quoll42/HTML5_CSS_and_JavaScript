@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="google.geometry.js"></script>
+    <script src="jquery-3.3.1.js"></script>
+    <style> /* This is constrcted to follow the principles of responsive web design */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 2em;
+            font-size: 2em color #333333;
+            background: #E6DEDC;
+        }
+        #summary {
+            width: 80%; min-height: 4em;
+            border: 1px solid #E2E2E2;
+            margin: 1em 0 1em 0; max-width: 20em;
+        }
+        .button {
+            font-size: 2em; font-weight: bold;
+            color: white; background: #1BA61B;
+            width: 7em; text-align: center;
+            text-decoration: none; line-height: 2em;
+            display: inline-block;
+        }
+        .row {
+            padding: 0.5em;
+        }
+        .row label {
+            width: 9em; display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Track movement</h1>
+    <div class="summary">
+        <div class="row">
+            <label for="currentSpeed">Current speed:</label>
+            <span id="currentSpeed"></span>
+        </div>
+        <div class="row">
+            <label for="distance">Total distance:</label>
+            <span id="distance"></span>
+        </div>
+        <div class="row">
+            <label for="altitude">Altitude:</label>
+            <span id="altitude"></span>
+        </div>
+        <div class="row message">
+        </div>
+    </div>
+    <a href="#" class="button" id="activate">Start</a>
+</body>
+<script>
+</script>
+</html>
