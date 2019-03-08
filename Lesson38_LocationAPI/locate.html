@@ -1,3 +1,6 @@
+<!--This doesn't function correctly  because AFAIK Google introduced the need for Google Maps
+    JavaScript API users to use an API key, and I don't have one (nor want to get one ATM).
+    See https://developers.google.com/maps/documentation/javascript/get-api-key -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="google.geometry.js"></script>
     <script src="jquery-3.3.1.js"></script>
-    <style> /* This is constrcted to follow the principles of responsive web design */
+    <style> /* This is constructed to follow the principles of responsive web design */
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 2em;
@@ -54,5 +57,53 @@
     <a href="#" class="button" id="activate">Start</a>
 </body>
 <script>
+    locationModule = function locationModule() { //This uses the module design pattern, which uses closure.
+        var lastPosition = null; //We'll use 'null' to indicate that this is not running (or a position value if it is)
+        var totalDistance = 0; //The variables here are private, due to closure.
+        var id = null; //This is for storing an id value returned by watchPosition, which we need later for stopping it.
+        function updateLocation(position) {
+            var updateDate = new Date(position.timestamp);
+            $('.message').text('Last updated at ' + updateDate.getHours() +
+            ':' + updateDate.getMinutes() + ':' + updateDate.getSeconds());
+            if (lastPosition) {
+                //Time in milliseconds since the last reading:
+                var timeSinceLastReading = position.timestamp - lastPosition.timestamp;
+                //Distance tavelled in metres:
+                var distance = google.maps.geometry.spherical.computeDistanceBetween
+                (new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+                new google.maps.LatLng(lastPosition.coords.latitude,lastPosition.coords.longitude));
+                totalDistance += distance;
+                if (timeSinceLastReading / 1000 > 0) {
+                    var metersPerMinute = distance / (timeSinceLastReading/60/1000);
+                    $('#.currentSpeed').text(Math.round(metersPerMinute) + " metres per minute");
+                }
+                $('#.distance').text(Math.round(totalDistance) + " metres travelled");
+                if (position.coords.altitude) {
+                    $('#.altitude').text(Math.round(position.coords.altitude) + " metres above sea level");
+                };
+            }
+            lastPosition = position;
+        }
+        return {
+            toggleState: function(evt) {
+                if (lastPosition) {
+                    lastPosition = null;
+                    lastPositionTime = null; //AG wonders, what is the point of this???
+                    totalDistance = 0;
+                    navigator.geolocation.clearWatch(id);
+                    $(evt.target).text('Start');
+                } else {
+                    startTime = $.now(); //AG wonders, what is the point of this???
+                    id = navigator.geolocation.watchPosition( //watchPosition takes 3 parameters:
+                        updateLocation, //1st parameter: success callback, which is fed a position
+                        function(error) {console.log(error)}, //2nd parameter: optional error callback, which is fed an error msg
+                        {maximumAge: 3000, timeout: 20000, enableHighAccuracy: true} //3rd parameter: optional hints
+                    );
+                    $(evt.target).text('Stop');
+                }
+            }
+        }
+    }();
+    $('#activate').click(locationModule.toggleState);
 </script>
 </html>
