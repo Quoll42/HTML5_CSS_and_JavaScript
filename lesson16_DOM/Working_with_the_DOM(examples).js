@@ -1,4 +1,4 @@
-/* Use the commands here in the Chrome with "domexample.html".
+/* Use the commands here in Chrome with "domexample.html".
 (After that, open "domexample_responding2events.html".) */
 
 // SELECTING ELEMENTS ================
